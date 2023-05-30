@@ -597,7 +597,9 @@ export class CallVertex extends PassVertex implements DataVertex {
         return this._argsEdges.map(e => e.target as DataVertex);
     }
 
-    //TODO: add API to add/remove args
+    public pushArg(arg: DataVertex) {
+        this._argsEdges.push(new Edge(this, arg, String(this._argsEdges.length), EdgeCategory.Data));
+    }
 
     public get callerObject(): DataVertex | undefined {
         return this._callerObjectEdge?.target as DataVertex | undefined;
