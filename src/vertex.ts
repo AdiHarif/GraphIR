@@ -569,7 +569,7 @@ export class CallVertex extends PassVertex implements DataVertex {
 
     private _calleeEdge: Edge;
     private _argsEdges: Array<Edge>;
-    private _callerObjectEdge: Edge;
+    private _callerObjectEdge?: Edge;
 
     constructor(callee?: DataVertex, args?: Array<DataVertex>, callerObject?: DataVertex, next?: ControlVertex) {
         super(next);
@@ -580,7 +580,9 @@ export class CallVertex extends PassVertex implements DataVertex {
         else {
             this._argsEdges = [];
         }
-        this._callerObjectEdge = new Edge(this, callerObject, 'object', EdgeCategory.Data);
+        if (callerObject !== undefined) {
+            this._callerObjectEdge = new Edge(this, callerObject, 'object', EdgeCategory.Data);
+        }
     }
 
     public get callee(): DataVertex | undefined {
@@ -598,15 +600,24 @@ export class CallVertex extends PassVertex implements DataVertex {
     //TODO: add API to add/remove args
 
     public get callerObject(): DataVertex | undefined {
-        return this._callerObjectEdge.target as DataVertex | undefined;
+        return this._callerObjectEdge?.target as DataVertex | undefined;
     }
 
     public set callerObject(v: DataVertex | undefined) {
-        this._callerObjectEdge.target = v;
+        if (this._callerObjectEdge === undefined) {
+            this._callerObjectEdge = new Edge(this, v, 'object', EdgeCategory.Data);
+        }
+        if (v === undefined) {
+            this._callerObjectEdge = undefined;
+        }
     }
 
     public get outEdges(): Array<Edge> {
-        return [...super.outEdges, this._calleeEdge, ...this._argsEdges, this._callerObjectEdge];
+        const out = [...super.outEdges, this._calleeEdge, ...this._argsEdges]
+        if (this._callerObjectEdge !== undefined) {
+            out.push(this._callerObjectEdge);
+        }
+        return out;
     }
 
     verify(): boolean {
