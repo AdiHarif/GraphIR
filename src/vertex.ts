@@ -1,6 +1,8 @@
 
 import { Edge, EdgeCategory, PhiEdge } from './edge';
 
+import { DebugInformation } from './debug_information';
+
 export type Value = number | string | boolean
 export type Operator = string
 
@@ -80,6 +82,11 @@ export abstract class Vertex {
     public abstract category: VertexCategory;
     public abstract label: string;
     public abstract verify(): boolean;
+
+    private _debugInfo = new DebugInformation();
+    public get debugInfo(): DebugInformation  {
+        return this._debugInfo;
+    }
 }
 
 export interface DataVertex extends Vertex {
