@@ -450,11 +450,34 @@ export class BranchVertex extends ControlVertex {
     }
 }
 
-export class MergeVertex extends NonTerminalControlVertex { // ? should add corresponding branch?
+export class MergeVertex extends NonTerminalControlVertex {
     public get kind() { return VertexKind.Merge; }
+
+    private _branchEdge: Edge;
+
+    constructor(branch?: BranchVertex, next?: ControlVertex) {
+        super(next);
+        this._branchEdge = new Edge(this, branch, 'branch', EdgeCategory.Association);
+    }
 
     public get phiVertices(): Array<PhiVertex> {
         return this.inEdges.filter((edge) => edge.source instanceof PhiVertex).map((edge) => edge.source as PhiVertex);
+    }
+
+    public get branch(): BranchVertex | undefined {
+        return this._branchEdge.target as BranchVertex | undefined;
+    }
+
+    public set branch(v: BranchVertex | undefined) {
+        this._branchEdge.target = v;
+    }
+
+    public get outEdges(): Array<Edge> {
+        return [ this._branchEdge, ...super.outEdges ];
+    }
+
+    verify(): boolean {
+        return this.branch !== undefined && super.verify();
     }
 }
 
