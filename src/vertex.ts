@@ -36,6 +36,7 @@ export enum BinaryOperation {
     Sub = '-',
     Mul = '*',
     Div = '/',
+    Mod = '%',
     Assign = '=',
     LessThan = '<',
     GreaterThan = '>',
