@@ -64,6 +64,7 @@ export class Graph {
 }
 
 export * from './vertex';
+export * from './vertex_visitor';
 export * from './edge';
 export * from './output/relations';
 export * from './output/dot';

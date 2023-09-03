@@ -2,6 +2,7 @@
 import { Edge, EdgeCategory, PhiEdge } from './edge';
 
 import { DebugInformation } from './debug_information';
+import { VertexVisitor } from './vertex_visitor';
 
 export type Value = number | string | boolean
 export type Operator = string
@@ -83,6 +84,7 @@ export abstract class Vertex {
     public abstract category: VertexCategory;
     public abstract label: string;
     public abstract verify(): boolean;
+    public abstract accept<T>(visitor: VertexVisitor<T>): T;
 
     private _debugInfo = new DebugInformation();
     public get debugInfo(): DebugInformation  {
@@ -115,6 +117,10 @@ export class LiteralVertex extends Vertex implements DataVertex {
 
     verify(): boolean {
         return this.value !== undefined;
+    }
+
+    accept<T>(visitor: VertexVisitor<T>): T {
+        return visitor.visitLiteralVertex(this);
     }
 }
 
@@ -164,6 +170,10 @@ export class SymbolVertex extends Vertex implements DataVertex {
     verify(): boolean {
         return this.name !== undefined && this.startVertex !== undefined;
     }
+
+    accept<T>(visitor: VertexVisitor<T>): T {
+        return visitor.visitSymbolVertex(this);
+    }
 }
 
 export class ParameterVertex extends Vertex implements DataVertex {
@@ -183,6 +193,10 @@ export class ParameterVertex extends Vertex implements DataVertex {
 
     verify(): boolean {
         return this.position !== undefined;
+    }
+
+    accept<T>(visitor: VertexVisitor<T>): T {
+        return visitor.visitParameterVertex(this);
     }
 }
 
@@ -223,6 +237,10 @@ export class PrefixUnaryOperationVertex extends UnaryOperationVertex {
     public get label(): string {
         return `${this.operator} (Prefix)`;
     }
+
+    accept<T>(visitor: VertexVisitor<T>): T {
+        return visitor.visitPrefixUnaryOperationVertex(this);
+    }
 }
 
 export class PostfixUnaryOperationVertex extends UnaryOperationVertex {
@@ -230,6 +248,10 @@ export class PostfixUnaryOperationVertex extends UnaryOperationVertex {
 
     public get label(): string {
         return `${this.operator} (Postfix)`;
+    }
+
+    accept<T>(visitor: VertexVisitor<T>): T {
+        return visitor.visitPostfixUnaryOperationVertex(this);
     }
 }
 
@@ -275,6 +297,10 @@ export class BinaryOperationVertex extends Vertex implements DataVertex {
 
     verify(): boolean {
         return this.operator !== undefined && this.left !== undefined && this.right !== undefined;
+    }
+
+    accept<T>(visitor: VertexVisitor<T>): T {
+        return visitor.visitBinaryOperationVertex(this);
     }
 }
 
@@ -323,6 +349,10 @@ export class PhiVertex extends Vertex implements DataVertex {
     verify(): boolean {
         return this.merge !== undefined && this._operandEdges.length > 1;
     }
+
+    accept<T>(visitor: VertexVisitor<T>): T {
+        return visitor.visitPhiVertex(this);
+    }
 }
 
 export abstract class ControlVertex extends Vertex {
@@ -359,10 +389,18 @@ export abstract class NonTerminalControlVertex extends ControlVertex {
 
 export class StartVertex extends NonTerminalControlVertex {
     public get kind() { return VertexKind.Start; }
+
+    accept<T>(visitor: VertexVisitor<T>): T {
+        return visitor.visitStartVertex(this);
+    }
 }
 
 export class PassVertex extends NonTerminalControlVertex {
     public get kind() { return VertexKind.Pass; }
+
+    accept<T>(visitor: VertexVisitor<T>): T {
+        return visitor.visitPassVertex(this);
+    }
 }
 
 export class ReturnVertex extends ControlVertex {
@@ -401,6 +439,10 @@ export class ReturnVertex extends ControlVertex {
 
     verify(): boolean {
         return true;
+    }
+
+    accept<T>(visitor: VertexVisitor<T>): T {
+        return visitor.visitReturnVertex(this);
     }
 }
 
@@ -449,6 +491,10 @@ export class BranchVertex extends ControlVertex {
     verify(): boolean {
         return this.condition !== undefined && this.trueNext !== undefined && this.falseNext !== undefined;
     }
+
+    accept<T>(visitor: VertexVisitor<T>): T {
+        return visitor.visitBranchVertex(this);
+    }
 }
 
 export class MergeVertex extends NonTerminalControlVertex {
@@ -480,6 +526,10 @@ export class MergeVertex extends NonTerminalControlVertex {
     verify(): boolean {
         return this.branch !== undefined && super.verify();
     }
+
+    accept<T>(visitor: VertexVisitor<T>): T {
+        return visitor.visitMergeVertex(this);
+    }
 }
 
 export class AllocationVertex extends PassVertex implements DataVertex {
@@ -506,6 +556,10 @@ export class AllocationVertex extends PassVertex implements DataVertex {
 
     public get outEdges(): Array<Edge> {
         return [...super.outEdges, this._constructorEdge];
+    }
+
+    accept<T>(visitor: VertexVisitor<T>): T {
+        return visitor.visitAllocationVertex(this);
     }
 }
 
@@ -554,6 +608,10 @@ export class StoreVertex extends PassVertex {
     verify(): boolean {
         return this.object !== undefined && this.property !== undefined && this.value !== undefined && super.verify();
     }
+
+    accept<T>(visitor: VertexVisitor<T>): T {
+        return visitor.visitStoreVertex(this);
+    }
 }
 
 export class LoadVertex extends PassVertex implements DataVertex {
@@ -591,6 +649,10 @@ export class LoadVertex extends PassVertex implements DataVertex {
 
     verify(): boolean {
         return this.object !== undefined && this.property !== undefined && super.verify();
+    }
+
+    accept<T>(visitor: VertexVisitor<T>): T {
+        return visitor.visitLoadVertex(this);
     }
 }
 
@@ -655,5 +717,9 @@ export class CallVertex extends PassVertex implements DataVertex {
 
     verify(): boolean {
         return this.callee !== undefined && this.args !== undefined && super.verify();
+    }
+
+    accept<T>(visitor: VertexVisitor<T>): T {
+        return visitor.visitCallVertex(this);
     }
 }
