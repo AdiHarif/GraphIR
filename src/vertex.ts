@@ -342,6 +342,12 @@ export class PhiVertex extends Vertex implements DataVertex {
         this._operandEdges.push(new PhiEdge(this, operand.value, operand.srcBranch, EdgeCategory.Data));
     }
 
+    public get operands(): Array<PhiOperand> {
+        return this._operandEdges.map((edge) => {
+            return { value: edge.target as DataVertex, srcBranch: edge.srcBranch };
+        });
+    }
+
     public get outEdges(): Array<Edge> {
         return [ this._mergeEdge, ...this._operandEdges ];
     }
