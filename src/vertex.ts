@@ -494,6 +494,10 @@ export class BranchVertex extends ControlVertex {
         this._falseEdge.target = v;
     }
 
+    public get merge(): MergeVertex | undefined {
+        return this._inEdges.filter((edge) => edge.source instanceof MergeVertex && edge.category == EdgeCategory.Association).map((edge) => edge.source as MergeVertex)[0];
+    }
+
     verify(): boolean {
         return this.condition !== undefined && this.trueNext !== undefined && this.falseNext !== undefined;
     }
