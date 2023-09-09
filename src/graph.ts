@@ -48,3 +48,4 @@ export * from './edge.js';
 export * from './output/relations.js';
 export * from './output/dot.js';
 export * from './verifier.js'
+export * from './types.js'
