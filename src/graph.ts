@@ -40,27 +40,6 @@ export class Graph {
     public getStartVertex(): StartVertex {
         return this.startVertex!;
     }
-
-    public verify(): boolean {
-        if (this.startVertex === undefined) {
-            return false;
-        }
-
-        for (const vertex of this.vertices) {
-            assert(vertex.id !== undefined);
-            if (!vertex.verify()) {
-                return false;
-            }
-        }
-
-        for (const subgraph of this.subgraphs) {
-            if (!subgraph.verify()) {
-                return false;
-            }
-        }
-
-        return true;
-    }
 }
 
 export * from './vertex.js';
@@ -68,3 +47,4 @@ export * from './vertex_visitor.js';
 export * from './edge.js';
 export * from './output/relations.js';
 export * from './output/dot.js';
+export * from './verifier.js'
