@@ -2,88 +2,96 @@
 import assert from 'assert';
 
 import { Graph } from './graph';
-import { VertexVisitor } from './vertex_visitor';
-import * as vertex from './vertex';
+import { VertexVisitor } from './vertex/vertex_visitor';
+import * as vertex from './vertex/vertex';
 import * as edge from './edge';
 
 class VertexVerifier implements VertexVisitor<boolean> {
 
-    private static verifyNonterminalControlVertex(vertex: vertex.NonTerminalControlVertex): boolean {
-        return vertex.next !== undefined;
+    private static verifyNonterminalControlVertex(v: vertex.NonTerminalControlVertex): boolean {
+        return v.next !== undefined;
     }
 
-    visitLiteralVertex(vertex: vertex.LiteralVertex): boolean {
+    visitLiteralVertex(v: vertex.LiteralVertex): boolean {
         return true;
     }
 
-    visitSymbolVertex(vertex: vertex.SymbolVertex): boolean{
-        return vertex.name !== undefined && vertex.startVertex !== undefined;
+    visitSymbolVertex(v: vertex.SymbolVertex): boolean{
+        return v.name !== undefined && v.startVertex !== undefined;
     }
 
-    visitParameterVertex(vertex: vertex.ParameterVertex): boolean {
-        return vertex.position !== undefined;
+    visitParameterVertex(v: vertex.ParameterVertex): boolean {
+        return v.position !== undefined;
     }
 
-    visitPrefixUnaryOperationVertex(vertex: vertex.PrefixUnaryOperationVertex): boolean {
-        return vertex.operator !== undefined && vertex.operand !== undefined;
+    visitPrefixUnaryOperationVertex(v: vertex.PrefixUnaryOperationVertex): boolean {
+        return v.operator !== undefined && v.operand !== undefined;
     }
 
-    visitPostfixUnaryOperationVertex(vertex: vertex.PostfixUnaryOperationVertex): boolean {
-        return vertex.operator !== undefined && vertex.operand !== undefined;
+    visitPostfixUnaryOperationVertex(v: vertex.PostfixUnaryOperationVertex): boolean {
+        return v.operator !== undefined && v.operand !== undefined;
     }
 
-    visitBinaryOperationVertex(vertex: vertex.BinaryOperationVertex): boolean {
-        return vertex.operator !== undefined && vertex.left !== undefined && vertex.right !== undefined;
+    visitBinaryOperationVertex(v: vertex.BinaryOperationVertex): boolean {
+        return v.operator !== undefined && v.left !== undefined && v.right !== undefined;
     }
 
-    visitPhiVertex(vertex: vertex.PhiVertex): boolean {
-        return vertex.merge !== undefined && vertex.outEdges.some(e => e instanceof edge.PhiEdge);
+    visitPhiVertex(v: vertex.PhiVertex): boolean {
+        return v.merge !== undefined && v.outEdges.some(e => e instanceof edge.PhiEdge);
     }
 
-    visitStartVertex(vertex: vertex.StartVertex): boolean {
+    visitBlockBeginVertex(v: vertex.BlockBeginVertex): boolean {
+        return v.next !== undefined && v.previous instanceof vertex.BranchVertex;
+    }
+
+    visitBlockEndVertex(v: vertex.BlockEndVertex): boolean {
+        return v.next instanceof vertex.MergeVertex && v.previous !== undefined;
+    }
+
+    visitPassVertex(v: vertex.PassVertex): boolean {
         return true;
     }
 
-    visitPassVertex(vertex: vertex.PassVertex): boolean {
+    visitStartVertex(v: vertex.StartVertex): boolean {
         return true;
     }
 
-    visitReturnVertex(vertex: vertex.ReturnVertex): boolean {
+    visitReturnVertex(v: vertex.ReturnVertex): boolean {
         return true;
     }
 
-    visitBranchVertex(vertex: vertex.BranchVertex): boolean {
-        return vertex.condition !== undefined
-            && vertex.trueNext !== undefined
-            && vertex.falseNext !== undefined;
+    visitBranchVertex(v: vertex.BranchVertex): boolean {
+        return v.condition !== undefined
+            && v.trueNext !== undefined
+            && v.falseNext !== undefined;
     }
 
-    visitMergeVertex(vertex: vertex.MergeVertex): boolean {
-        return vertex.branch !== undefined
-            && VertexVerifier.verifyNonterminalControlVertex(vertex);
+    visitMergeVertex(v: vertex.MergeVertex): boolean {
+        return v.branch !== undefined
+            && VertexVerifier.verifyNonterminalControlVertex(v);
     }
 
-    visitAllocationVertex(vertex: vertex.AllocationVertex): boolean {
-        return VertexVerifier.verifyNonterminalControlVertex(vertex);
+    visitAllocationVertex(v: vertex.AllocationVertex): boolean {
+        return VertexVerifier.verifyNonterminalControlVertex(v);
     }
 
-    visitStoreVertex(vertex: vertex.StoreVertex): boolean {
-        return vertex.object !== undefined
-            && vertex.property !== undefined
-            && vertex.value !== undefined
-            && VertexVerifier.verifyNonterminalControlVertex(vertex);
+    visitStoreVertex(v: vertex.StoreVertex): boolean {
+        return v.object !== undefined
+            && v.property !== undefined
+            && v.value !== undefined
+            && VertexVerifier.verifyNonterminalControlVertex(v);
     }
 
-    visitLoadVertex(vertex: vertex.LoadVertex): boolean {
-        return vertex.object !== undefined
-            && vertex.property !== undefined
-            && VertexVerifier.verifyNonterminalControlVertex(vertex);
+    visitLoadVertex(v: vertex.LoadVertex): boolean {
+        return v.object !== undefined
+            && v.property !== undefined
+            && VertexVerifier.verifyNonterminalControlVertex(v);
     }
 
-    visitCallVertex(vertex: vertex.CallVertex): boolean {
-        return vertex.callee !== undefined
-            && vertex.args !== undefined
-            && VertexVerifier.verifyNonterminalControlVertex(vertex);
+    visitCallVertex(v: vertex.CallVertex): boolean {
+        return v.callee !== undefined
+            && v.args !== undefined
+            && VertexVerifier.verifyNonterminalControlVertex(v);
     }
 
 }
@@ -95,9 +103,9 @@ export function verifyGraph(graph: Graph): boolean {
         return false;
     }
 
-    for (const vertex of graph.vertices) {
-        assert(vertex.id !== undefined);
-        if (!vertex.accept(vertexVerifier)) {
+    for (const v of graph.vertices) {
+        assert(v.id !== undefined);
+        if (!v.accept(vertexVerifier)) {
             return false;
         }
     }

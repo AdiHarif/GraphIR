@@ -1,7 +1,5 @@
 
-import assert from 'assert';
-
-import { Vertex, StartVertex } from './vertex.js';
+import { Vertex, VertexBase, StartVertex } from './vertex/vertex.js';
 
 export class Graph {
     public readonly vertices: Array<Vertex> = [];
@@ -11,7 +9,7 @@ export class Graph {
     constructor(vertices?: Array<Vertex>, startVertex?: StartVertex, subgraphs?: Array<Graph>) {
         if (vertices !== undefined) {
             this.vertices = vertices;
-            this.vertices.forEach((vertex, id) => vertex.id = id);
+            this.vertices.forEach((vertex, id) => (vertex as VertexBase).id = id);
         }
 
         if (startVertex !== undefined) {
@@ -24,7 +22,7 @@ export class Graph {
     }
 
     public addVertex(vertex: Vertex): void {
-        vertex.id = this.vertices.length;
+        (vertex as VertexBase).id = this.vertices.length;
         this.vertices.push(vertex); //TODO: check if vertex already exists
     }
 
@@ -42,8 +40,8 @@ export class Graph {
     }
 }
 
-export * from './vertex.js';
-export * from './vertex_visitor.js';
+export * from './vertex/vertex.js';
+export * from './vertex/vertex_visitor.js';
 export * from './edge.js';
 export * from './output/relations.js';
 export * from './output/dot.js';

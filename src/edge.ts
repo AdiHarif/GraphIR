@@ -1,6 +1,6 @@
 
-import { Vertex } from './vertex/base_vertex.js';
-import { ControlVertex } from './vertex.js';
+import { Vertex } from './vertex/vertex.js';
+import { ControlVertex } from './vertex/control_vertex.js';
 
 
 export enum EdgeCategory {

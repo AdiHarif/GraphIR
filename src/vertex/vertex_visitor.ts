@@ -9,11 +9,13 @@ export interface VertexVisitor<T> {
     visitPostfixUnaryOperationVertex(vertex: vertex.PostfixUnaryOperationVertex): T;
     visitBinaryOperationVertex(vertex: vertex.BinaryOperationVertex): T;
     visitPhiVertex(vertex: vertex.PhiVertex): T;
+    visitBlockBeginVertex(vertex: vertex.BlockBeginVertex): T;
+    visitBlockEndVertex(vertex: vertex.BlockEndVertex): T;
     visitStartVertex(vertex: vertex.StartVertex): T;
-    visitPassVertex(vertex: vertex.PassVertex): T;
     visitReturnVertex(vertex: vertex.ReturnVertex): T;
     visitBranchVertex(vertex: vertex.BranchVertex): T;
     visitMergeVertex(vertex: vertex.MergeVertex): T;
+    visitPassVertex(vertex: vertex.PassVertex): T;
     visitAllocationVertex(vertex: vertex.AllocationVertex): T;
     visitStoreVertex(vertex: vertex.StoreVertex): T;
     visitLoadVertex(vertex: vertex.LoadVertex): T;
