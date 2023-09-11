@@ -106,6 +106,13 @@ export class BlockEndVertex extends ControlVertex implements NonInitialControlVe
         this._previous = vertex;
     }
 
+    get outEdges(): Array<Edge> {
+        const out = super.outEdges;
+        if (this._nextEdge) {
+            out.push(this._nextEdge);
+        }
+        return out;
+    }
 
     accept<T>(visitor: VertexVisitor<T>): T {
         return visitor.visitBlockEndVertex(this);
