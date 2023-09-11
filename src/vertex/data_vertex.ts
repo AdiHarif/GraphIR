@@ -10,8 +10,8 @@ export interface DataVertex extends Vertex {
     type: ts.Type;
 }
 
-/* @internal */
-abstract class DataVertexBase extends VertexBase implements DataVertex {
+
+export abstract class DataVertexBase extends VertexBase implements DataVertex {
     get category() { return VertexCategory.Data; }
 
     constructor(readonly type: ts.Type) {

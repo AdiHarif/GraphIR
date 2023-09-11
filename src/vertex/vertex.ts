@@ -49,12 +49,13 @@ export interface Vertex {
     removeInEdge(edge: Edge): void;
 }
 
+
 export abstract class VertexBase implements Vertex {
     /*@internal*/
     _inEdges: Array<Edge> = [];
 
     /*@internal*/
-    id: number = -1;
+    _id: number = -1;
 
     get inEdges(): Array<Edge> {
         return [...this._inEdges];
@@ -62,6 +63,10 @@ export abstract class VertexBase implements Vertex {
 
     get outEdges(): Array<Edge> {
         return [];
+    }
+
+    get id(): number {
+        return this._id;
     }
 
     abstract kind: VertexKind;

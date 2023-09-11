@@ -9,7 +9,7 @@ export class Graph {
     constructor(vertices?: Array<Vertex>, startVertex?: StartVertex, subgraphs?: Array<Graph>) {
         if (vertices !== undefined) {
             this.vertices = vertices;
-            this.vertices.forEach((vertex, id) => (vertex as VertexBase).id = id);
+            this.vertices.forEach((vertex, id) => (vertex as VertexBase)._id = id);
         }
 
         if (startVertex !== undefined) {
@@ -22,7 +22,7 @@ export class Graph {
     }
 
     public addVertex(vertex: Vertex): void {
-        (vertex as VertexBase).id = this.vertices.length;
+        (vertex as VertexBase)._id = this.vertices.length;
         this.vertices.push(vertex); //TODO: check if vertex already exists
     }
 
