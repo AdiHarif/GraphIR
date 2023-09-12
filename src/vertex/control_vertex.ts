@@ -186,7 +186,7 @@ export class BranchVertex extends ControlVertex implements NonInitialControlVert
     private _trueEdge?: Edge;
     private _falseEdge?: Edge;
 
-    constructor(condition?: DataVertex, trueNext?: ControlVertex, falseNext?: ControlVertex) {
+    constructor(condition?: DataVertex, trueNext?: BlockBeginVertex, falseNext?: BlockBeginVertex) {
         super();
         this.condition = condition;
         this.trueNext = trueNext;
@@ -231,11 +231,11 @@ export class BranchVertex extends ControlVertex implements NonInitialControlVert
         }
     }
 
-    get trueNext(): ControlVertex | undefined {
-        return this._trueEdge?.target as ControlVertex | undefined;
+    get trueNext(): BlockBeginVertex | undefined {
+        return this._trueEdge?.target as BlockBeginVertex | undefined;
     }
 
-    set trueNext(v: ControlVertex | undefined) {
+    set trueNext(v: BlockBeginVertex | undefined) {
         if (this._trueEdge) {
             this._trueEdge.target.removeInEdge(this._trueEdge);
             this._trueEdge = undefined;
@@ -246,11 +246,11 @@ export class BranchVertex extends ControlVertex implements NonInitialControlVert
         }
     }
 
-    get falseNext(): ControlVertex | undefined {
-        return this._falseEdge?.target as ControlVertex | undefined;
+    get falseNext(): BlockBeginVertex | undefined {
+        return this._falseEdge?.target as BlockBeginVertex | undefined;
     }
 
-    set falseNext(v: ControlVertex | undefined) {
+    set falseNext(v: BlockBeginVertex | undefined) {
         if (this._falseEdge) {
             this._falseEdge.target.removeInEdge(this._falseEdge);
             this._falseEdge = undefined;
