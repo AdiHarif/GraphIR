@@ -168,7 +168,7 @@ export class SymbolVertex extends Vertex implements DataVertex {
     }
 
     verify(): boolean {
-        return this.name !== undefined && this.startVertex !== undefined;
+        return this.name !== undefined;
     }
 
     accept<T>(visitor: VertexVisitor<T>): T {
