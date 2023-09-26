@@ -19,12 +19,18 @@ const edgeCategoryToShape = new Map<EdgeCategory, gviz.ArrowType>([
     [ EdgeCategory.Association, 'vee' ],
 ]);
 
-function irToModel(graph: Graph): gviz.Digraph {
-    const digraph = new gviz.Digraph()
+let clusterId = 0;
+function irToModel(graph: Graph): gviz.Subgraph {
+    const currentCluster = clusterId++;
+    const digraph = new gviz.Subgraph(`cluster_${currentCluster}`, { style: 'dotted' });
+
+    graph.subgraphs.forEach(subgraph => {
+        digraph.addSubgraph(irToModel(subgraph));
+    });
 
     graph.vertices.forEach((v, id) => {
         digraph.createNode(
-            String(id),
+            `${currentCluster}.${id}`,
             {
                 label: `${id} | ${v.label}`,
                 shape: vertexCategoryToShape.get(v.category)
@@ -33,7 +39,7 @@ function irToModel(graph: Graph): gviz.Digraph {
 
         v.outEdges.forEach(e => {
             digraph.createEdge(
-                [ String(e.source.id), String(e.target!.id) ],
+                [ `${currentCluster}.${e.source.id}`, `${currentCluster}.${e.target!.id}` ],
                 {
                     label: e.label,
                     arrowhead: edgeCategoryToShape.get(e.category),
@@ -47,6 +53,8 @@ function irToModel(graph: Graph): gviz.Digraph {
 }
 
 export function exportIrToDot(graph: Graph, outDir: string) {
-    const outString: string =  gviz.toDot(irToModel(graph))
+    const dotGraph = new gviz.Digraph()
+    dotGraph.addSubgraph(irToModel(graph));
+    const outString: string =  gviz.toDot(dotGraph);
     fs.writeFile(`${outDir}/graph.dot`, outString);
 }
