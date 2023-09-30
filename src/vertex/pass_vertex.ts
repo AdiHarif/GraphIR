@@ -1,11 +1,11 @@
 
-import * as ts from 'typescript';
+import ts from 'typescript';
 
-import { Vertex, VertexCategory, VertexKind } from './vertex';
-import { NonTerminalControlVertex, NonInitialControlVertex } from './control_vertex';
-import { DataVertex, SymbolVertex } from './data_vertex';
-import { VertexVisitor } from './vertex_visitor';
-import { Edge, EdgeCategory } from '../edge';
+import { Vertex, VertexCategory, VertexKind } from './vertex.js';
+import { NonTerminalControlVertex, NonInitialControlVertex } from './control_vertex.js';
+import { DataVertex, SymbolVertex } from './data_vertex.js';
+import { VertexVisitor } from './vertex_visitor.js';
+import { Edge, EdgeCategory } from '../edge.js';
 
 export class PassVertex extends NonTerminalControlVertex implements NonInitialControlVertex {
     get kind() { return VertexKind.Pass; }

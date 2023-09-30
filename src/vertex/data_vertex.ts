@@ -1,10 +1,11 @@
 
-import * as ts from 'typescript';
-import { Vertex, VertexBase, VertexKind, VertexCategory } from './vertex';
-import { StartVertex, ControlVertex, MergeVertex } from './control_vertex';
-import { VertexVisitor } from './vertex_visitor';
-import { Value, Operator } from '../types';
-import { Edge, PhiEdge, EdgeCategory } from '../edge';
+import ts from 'typescript';
+
+import { Vertex, VertexBase, VertexKind, VertexCategory } from './vertex.js';
+import { StartVertex, ControlVertex, MergeVertex } from './control_vertex.js';
+import { VertexVisitor } from './vertex_visitor.js';
+import { Value, Operator } from '../types.js';
+import { Edge, PhiEdge, EdgeCategory } from '../edge.js';
 
 export interface DataVertex extends Vertex {
     type: ts.Type;

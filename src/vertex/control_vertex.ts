@@ -1,8 +1,8 @@
 
-import { VertexBase, VertexCategory, VertexKind } from "./vertex";
-import { DataVertex, PhiVertex } from "./data_vertex";
-import { VertexVisitor } from "./vertex_visitor";
-import { Edge, EdgeCategory } from "../edge"
+import { VertexBase, VertexCategory, VertexKind } from "./vertex.js";
+import { DataVertex, PhiVertex } from "./data_vertex.js";
+import { VertexVisitor } from "./vertex_visitor.js";
+import { Edge, EdgeCategory } from "../edge.js"
 
 
 export abstract class ControlVertex extends VertexBase {

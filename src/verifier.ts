@@ -1,10 +1,10 @@
 
 import assert from 'assert';
 
-import { Graph } from './graph';
-import { VertexVisitor } from './vertex/vertex_visitor';
-import * as vertex from './vertex/vertex';
-import * as edge from './edge';
+import { Graph } from './graph.js';
+import { VertexVisitor } from './vertex/vertex_visitor.js';
+import * as vertex from './vertex/vertex.js';
+import * as edge from './edge.js';
 
 class VertexVerifier implements VertexVisitor<boolean> {
 

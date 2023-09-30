@@ -1,7 +1,7 @@
 
-import { Edge } from '../edge';
-import { DebugInformation } from './debug_information';
-import { VertexVisitor } from './vertex_visitor';
+import { Edge } from '../edge.js';
+import { DebugInformation } from './debug_information.js';
+import { VertexVisitor } from './vertex_visitor.js';
 
 export enum VertexKind {
     Literal = 'Literal',
@@ -91,7 +91,7 @@ export abstract class VertexBase implements Vertex {
     }
 }
 
-export * from './data_vertex';
-export * from './control_vertex';
-export * from './pass_vertex';
+export * from './data_vertex.js';
+export * from './control_vertex.js';
+export * from './pass_vertex.js';
 
