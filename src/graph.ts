@@ -1,5 +1,6 @@
 
-import { Vertex, VertexBase, StartVertex } from './vertex/vertex.js';
+import { Vertex, VertexBase } from './vertex/vertex.js';
+import { StartVertex } from './vertex/control_vertex.js';
 
 export class Graph {
     public readonly vertices: Array<Vertex> = [];
@@ -39,11 +40,3 @@ export class Graph {
         return this.startVertex!;
     }
 }
-
-export * from './vertex/vertex.js';
-export * from './vertex/vertex_visitor.js';
-export * from './edge.js';
-export * from './output/relations.js';
-export * from './output/dot.js';
-export * from './verifier.js'
-export * from './types.js'

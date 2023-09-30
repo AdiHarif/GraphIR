@@ -2,7 +2,7 @@
   "name": "graphir",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/graph.js",
+  "main": "dist/module_exports.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -11,7 +11,7 @@
   },
   "author": "",
   "license": "ISC",
-  "types": "dist/dts/graph.d.ts",
+  "types": "dist/dts/module_exports.d.ts",
   "dependencies": {
     "@types/node": "^18.16.2",
     "csv-writer": "^1.6.0",

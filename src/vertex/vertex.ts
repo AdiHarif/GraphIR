@@ -90,8 +90,3 @@ export abstract class VertexBase implements Vertex {
         }
     }
 }
-
-export * from './data_vertex.js';
-export * from './control_vertex.js';
-export * from './pass_vertex.js';
-

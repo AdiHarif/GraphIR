@@ -1,23 +1,50 @@
 
-import * as vertex from "./vertex.js";
+import {
+    LiteralVertex,
+    SymbolVertex,
+    ParameterVertex,
+    PrefixUnaryOperationVertex,
+    PostfixUnaryOperationVertex,
+    BinaryOperationVertex,
+    PhiVertex
+} from './data_vertex.js';
+
+import {
+    NonTerminalControlVertex,
+    BlockBeginVertex,
+    BlockEndVertex,
+    BranchVertex,
+    MergeVertex,
+    StartVertex,
+    ReturnVertex
+} from './control_vertex.js';
+
+import {
+    PassVertex,
+    AllocationVertex,
+    StoreVertex,
+    LoadVertex,
+    CallVertex
+} from './pass_vertex.js';
+
 
 export interface VertexVisitor<T> {
-    visitLiteralVertex(vertex: vertex.LiteralVertex): T;
-    visitSymbolVertex(vertex: vertex.SymbolVertex): T;
-    visitParameterVertex(vertex: vertex.ParameterVertex): T;
-    visitPrefixUnaryOperationVertex(vertex: vertex.PrefixUnaryOperationVertex): T;
-    visitPostfixUnaryOperationVertex(vertex: vertex.PostfixUnaryOperationVertex): T;
-    visitBinaryOperationVertex(vertex: vertex.BinaryOperationVertex): T;
-    visitPhiVertex(vertex: vertex.PhiVertex): T;
-    visitBlockBeginVertex(vertex: vertex.BlockBeginVertex): T;
-    visitBlockEndVertex(vertex: vertex.BlockEndVertex): T;
-    visitStartVertex(vertex: vertex.StartVertex): T;
-    visitReturnVertex(vertex: vertex.ReturnVertex): T;
-    visitBranchVertex(vertex: vertex.BranchVertex): T;
-    visitMergeVertex(vertex: vertex.MergeVertex): T;
-    visitPassVertex(vertex: vertex.PassVertex): T;
-    visitAllocationVertex(vertex: vertex.AllocationVertex): T;
-    visitStoreVertex(vertex: vertex.StoreVertex): T;
-    visitLoadVertex(vertex: vertex.LoadVertex): T;
-    visitCallVertex(vertex: vertex.CallVertex): T;
+    visitLiteralVertex(vertex: LiteralVertex): T;
+    visitSymbolVertex(vertex: SymbolVertex): T;
+    visitParameterVertex(vertex: ParameterVertex): T;
+    visitPrefixUnaryOperationVertex(vertex: PrefixUnaryOperationVertex): T;
+    visitPostfixUnaryOperationVertex(vertex: PostfixUnaryOperationVertex): T;
+    visitBinaryOperationVertex(vertex: BinaryOperationVertex): T;
+    visitPhiVertex(vertex: PhiVertex): T;
+    visitBlockBeginVertex(vertex: BlockBeginVertex): T;
+    visitBlockEndVertex(vertex: BlockEndVertex): T;
+    visitStartVertex(vertex: StartVertex): T;
+    visitReturnVertex(vertex: ReturnVertex): T;
+    visitBranchVertex(vertex: BranchVertex): T;
+    visitMergeVertex(vertex: MergeVertex): T;
+    visitPassVertex(vertex: PassVertex): T;
+    visitAllocationVertex(vertex: AllocationVertex): T;
+    visitStoreVertex(vertex: StoreVertex): T;
+    visitLoadVertex(vertex: LoadVertex): T;
+    visitCallVertex(vertex: CallVertex): T;
 }
