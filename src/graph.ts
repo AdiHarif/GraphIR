@@ -10,7 +10,6 @@ export class Graph {
     constructor(vertices?: Array<Vertex>, startVertex?: StartVertex, subgraphs?: Array<Graph>) {
         if (vertices !== undefined) {
             this.vertices = vertices;
-            this.vertices.forEach((vertex, id) => (vertex as VertexBase)._id = id);
         }
 
         if (startVertex !== undefined) {
@@ -20,6 +19,8 @@ export class Graph {
         if (subgraphs !== undefined) {
             this.subgraphs = subgraphs;
         }
+
+        this.reEnumerate(0);
     }
 
     public addVertex(vertex: Vertex): void {
@@ -38,5 +39,16 @@ export class Graph {
 
     public getStartVertex(): StartVertex {
         return this.startVertex!;
+    }
+
+    private reEnumerate(start_index: number): number {
+        let index = start_index;
+        this.vertices.forEach(vertex => {
+            (vertex as VertexBase)._id = index++;
+        });
+        this.subgraphs.forEach(subgraph => {
+            index = subgraph.reEnumerate(index);
+        });
+        return index;
     }
 }

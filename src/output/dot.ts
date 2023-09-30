@@ -28,18 +28,18 @@ function irToModel(graph: Graph): gviz.Subgraph {
         digraph.addSubgraph(irToModel(subgraph));
     });
 
-    graph.vertices.forEach((v, id) => {
+    graph.vertices.forEach((v) => {
         digraph.createNode(
-            `${currentCluster}.${id}`,
+            String(v.id),
             {
-                label: `${id} | ${v.label}`,
+                label: `${v.id} | ${v.label}`,
                 shape: vertexCategoryToShape.get(v.category)
             }
         );
 
         v.outEdges.forEach(e => {
             digraph.createEdge(
-                [ `${currentCluster}.${e.source.id}`, `${currentCluster}.${e.target!.id}` ],
+                [ String(e.source.id), String(e.target!.id) ],
                 {
                     label: e.label,
                     arrowhead: edgeCategoryToShape.get(e.category),
