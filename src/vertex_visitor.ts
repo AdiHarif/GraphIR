@@ -1,5 +1,5 @@
 
-import * as vertex from "./vertex";
+import * as vertex from "./vertex.js";
 
 export interface VertexVisitor<T> {
     visitLiteralVertex(vertex: vertex.LiteralVertex): T;

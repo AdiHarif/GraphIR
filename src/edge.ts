@@ -1,5 +1,5 @@
 
-import { ControlVertex, Vertex } from './vertex';
+import { ControlVertex, Vertex } from './vertex.js';
 
 
 export enum EdgeCategory {

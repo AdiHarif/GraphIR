@@ -1,6 +1,6 @@
 
 import * as csv_writer from 'csv-writer'
-import { Graph } from '../graph'
+import { Graph } from '../graph.js'
 
 export async function exportIrToRelations(graph: Graph, dir: string) {
     const verticesPath = `${dir}/vertices.facts`

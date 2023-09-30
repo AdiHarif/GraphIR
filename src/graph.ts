@@ -1,7 +1,7 @@
 
 import assert from 'assert';
 
-import { Vertex, StartVertex } from './vertex';
+import { Vertex, StartVertex } from './vertex.js';
 
 export class Graph {
     public readonly vertices: Array<Vertex> = [];
@@ -63,8 +63,8 @@ export class Graph {
     }
 }
 
-export * from './vertex';
-export * from './vertex_visitor';
-export * from './edge';
-export * from './output/relations';
-export * from './output/dot';
+export * from './vertex.js';
+export * from './vertex_visitor.js';
+export * from './edge.js';
+export * from './output/relations.js';
+export * from './output/dot.js';

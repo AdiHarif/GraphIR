@@ -1,8 +1,8 @@
 
-import { Edge, EdgeCategory, PhiEdge } from './edge';
+import { Edge, EdgeCategory, PhiEdge } from './edge.js';
 
-import { DebugInformation } from './debug_information';
-import { VertexVisitor } from './vertex_visitor';
+import { DebugInformation } from './debug_information.js';
+import { VertexVisitor } from './vertex_visitor.js';
 
 export type Value = number | string | boolean
 export type Operator = string

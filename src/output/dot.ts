@@ -3,9 +3,9 @@ import * as fs from 'fs/promises'
 
 import * as gviz from 'ts-graphviz'
 
-import { Graph } from '../graph'
-import { VertexCategory } from '../vertex'
-import { EdgeCategory } from '../edge'
+import { Graph } from '../graph.js'
+import { VertexCategory } from '../vertex.js'
+import { EdgeCategory } from '../edge.js'
 
 const vertexCategoryToShape = new Map<VertexCategory, string>([
     [ VertexCategory.Control, 'diamond' ],
