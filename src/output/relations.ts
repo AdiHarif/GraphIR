@@ -2,13 +2,31 @@
 import * as csv_writer from 'csv-writer'
 import { Graph } from '../graph.js'
 
+import { VertexKind } from '../vertex/vertex.js'
+import { LiteralVertex, ParameterVertex, SymbolVertex } from '../module_exports.js';
+
 export async function writeRecordsToFiles(graph: Graph, verticesWriter: any, edgesWriter: any) {
 
     const vertices: Array<Array<any>> = [];
     const edges: Array<Array<any>> = [];
 
     graph.vertices.forEach(v => {
-        vertices.push([ v.id, v.kind, v.category, v.label ]);
+        let value: string;
+        switch (v.kind) {
+            case VertexKind.Literal:
+                value = String((v as LiteralVertex).value);
+                break;
+            case VertexKind.Symbol:
+                value = (v as SymbolVertex).name;
+                break;
+            case VertexKind.Parameter:
+                value = String((v as ParameterVertex).position);
+                break;
+            default:
+                value = v.label;
+                break;
+        }
+        vertices.push([ v.id, v.kind, v.category, value ]);
         edges.push(...v.outEdges.map(e=> [ e.source.id, e.target!.id, e.category, e.label ]));
     })
 
