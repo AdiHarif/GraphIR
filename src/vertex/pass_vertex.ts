@@ -44,18 +44,18 @@ export class AllocationVertex extends CompoundVertex {
 
     private _constructorEdge?: Edge;
 
-    constructor(type: ts.Type, constructorSymbol?: SymbolVertex, next?: NonInitialControlVertex) {
+    constructor(type: ts.Type, constructorSymbol?: DataVertex, next?: NonInitialControlVertex) {
         super(type, next);
         this.constructorSymbol = constructorSymbol;
     }
 
-    public get constructorSymbol(): SymbolVertex | undefined {
-        return this._constructorEdge?.target as SymbolVertex | undefined;
+    public get constructorSymbol(): DataVertex | undefined {
+        return this._constructorEdge?.target as DataVertex | undefined;
     }
 
-    public set constructorSymbol(v: SymbolVertex | undefined) {
+    public set constructorSymbol(v: DataVertex | undefined) {
         if (this._constructorEdge) {
-            (this._constructorEdge.target as SymbolVertex).removeInEdge(this._constructorEdge);
+            this._constructorEdge.target.removeInEdge(this._constructorEdge);
             this._constructorEdge = undefined;
         }
         if (v) {
