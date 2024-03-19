@@ -42,32 +42,32 @@ export abstract class CompoundVertex extends PassVertex implements DataVertex {
 export class AllocationVertex extends CompoundVertex {
     get kind() { return VertexKind.Allocation; }
 
-    private _constructorEdge?: Edge;
+    private _callee?: Edge;
 
-    constructor(type: ts.Type, constructorSymbol?: DataVertex, next?: NonInitialControlVertex) {
+    constructor(type: ts.Type, callee?: DataVertex, next?: NonInitialControlVertex) {
         super(type, next);
-        this.constructorSymbol = constructorSymbol;
+        this.callee = callee;
     }
 
-    public get constructorSymbol(): DataVertex | undefined {
-        return this._constructorEdge?.target as DataVertex | undefined;
+    public get callee(): DataVertex | undefined {
+        return this._callee?.target as DataVertex | undefined;
     }
 
-    public set constructorSymbol(v: DataVertex | undefined) {
-        if (this._constructorEdge) {
-            this._constructorEdge.target.removeInEdge(this._constructorEdge);
-            this._constructorEdge = undefined;
+    public set callee(v: DataVertex | undefined) {
+        if (this._callee) {
+            this._callee.target.removeInEdge(this._callee);
+            this._callee = undefined;
         }
         if (v) {
-            this._constructorEdge = new Edge(this, v, 'constructor', EdgeCategory.Data);
-            v.pushInEdge(this._constructorEdge);
+            this._callee = new Edge(this, v, 'callee', EdgeCategory.Data);
+            v.pushInEdge(this._callee);
         }
     }
 
     public get outEdges(): Array<Edge> {
         const out = super.outEdges;
-        if (this._constructorEdge) {
-            out.push(this._constructorEdge);
+        if (this._callee) {
+            out.push(this._callee);
         }
         return out;
     }
