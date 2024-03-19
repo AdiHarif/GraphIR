@@ -43,10 +43,12 @@ export class AllocationVertex extends CompoundVertex {
     get kind() { return VertexKind.Allocation; }
 
     private _callee?: Edge;
+    private _argsEdges: Array<Edge> = [];
 
-    constructor(type: ts.Type, callee?: DataVertex, next?: NonInitialControlVertex) {
+    constructor(type: ts.Type, callee?: DataVertex, args?: Array<DataVertex>, next?: NonInitialControlVertex) {
         super(type, next);
         this.callee = callee;
+        args?.forEach(arg => this.pushArg(arg));
     }
 
     public get callee(): DataVertex | undefined {
@@ -64,11 +66,22 @@ export class AllocationVertex extends CompoundVertex {
         }
     }
 
+    public get args(): Array<DataVertex> | undefined {
+        return this._argsEdges.map(e => e.target as DataVertex);
+    }
+
+    public pushArg(arg: DataVertex) {
+        const e = new Edge(this, arg, String(this._argsEdges.length), EdgeCategory.Data);
+        this._argsEdges.push(e);
+        arg.pushInEdge(e);
+    }
+
     public get outEdges(): Array<Edge> {
         const out = super.outEdges;
         if (this._callee) {
             out.push(this._callee);
         }
+        this._argsEdges.forEach(e => out.push(e));
         return out;
     }
 
