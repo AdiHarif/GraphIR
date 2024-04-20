@@ -1,21 +1,24 @@
 
 import ts from 'typescript';
+import * as irType from '../type/type.js';
+
 
 import { Vertex, VertexBase, VertexKind, VertexCategory } from './vertex.js';
 import { StartVertex, ControlVertex, MergeVertex } from './control_vertex.js';
 import { VertexVisitor } from './vertex_visitor.js';
-import { Value, Operator } from '../types.js';
+import { Value, Operator } from '../helper_types.js';
 import { Edge, PhiEdge, EdgeCategory } from '../edge.js';
 
 export interface DataVertex extends Vertex {
-    type: ts.Type;
+    declaredType: ts.Type;
+    verifiedType?: irType.Type;
 }
 
 
 export abstract class DataVertexBase extends VertexBase implements DataVertex {
     get category() { return VertexCategory.Data; }
 
-    constructor(readonly type: ts.Type) {
+    constructor(readonly declaredType: ts.Type) {
         super();
     }
 }

@@ -30,11 +30,11 @@ export class PassVertex extends NonTerminalControlVertex implements NonInitialCo
 export abstract class CompoundVertex extends PassVertex implements DataVertex {
     get category() { return VertexCategory.Compound; }
 
-    readonly type: ts.Type;
+    readonly declaredType: ts.Type;
 
     constructor(type: ts.Type, next?: NonInitialControlVertex) {
         super(next);
-        this.type = type;
+        this.declaredType = type;
     }
 }
 
