@@ -1,11 +1,16 @@
 
+import * as ts from 'typescript';
+
 import { Vertex, VertexBase } from './vertex/vertex.js';
 import { StartVertex } from './vertex/control_vertex.js';
-
+import * as irType from './type/type.js';
 export class Graph {
     public readonly vertices: Array<Vertex> = [];
     private startVertex?: StartVertex;
     public readonly subgraphs: Array<Graph> = [];
+
+    public declaredType?: ts.Type;
+    public verifiedType?: irType.Type;
 
     constructor(vertices?: Array<Vertex>, startVertex?: StartVertex, subgraphs?: Array<Graph>) {
         if (vertices !== undefined) {
