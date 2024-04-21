@@ -42,3 +42,13 @@ export class FloatType extends NumberType {
         return visitor.visitFloatType(this);
     }
 }
+
+export class FunctionType extends Type {
+    constructor(public returnType: Type, public parameterTypes: Array<Type>) {
+        super();
+    }
+
+    accept<T>(visitor: TypeVisitor<T>): T {
+        return visitor.visitFunctionType(this);
+    }
+}
