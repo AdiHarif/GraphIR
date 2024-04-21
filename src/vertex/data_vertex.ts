@@ -9,21 +9,17 @@ import { VertexVisitor } from './vertex_visitor.js';
 import { Value, Operator } from '../helper_types.js';
 import { Edge, PhiEdge, EdgeCategory } from '../edge.js';
 
-export interface DataVertex extends Vertex {
-    declaredType: ts.Type;
-    verifiedType?: irType.Type;
-}
-
-
-export abstract class DataVertexBase extends VertexBase implements DataVertex {
+export abstract class DataVertex extends VertexBase {
     get category() { return VertexCategory.Data; }
+
+    public verifiedType?: irType.Type;
 
     constructor(readonly declaredType: ts.Type) {
         super();
     }
 }
 
-export class LiteralVertex extends DataVertexBase {
+export class LiteralVertex extends DataVertex {
     get kind() { return VertexKind.Literal; }
 
     constructor(readonly value: Value, type: ts.Type) {
@@ -43,7 +39,7 @@ export class LiteralVertex extends DataVertexBase {
     }
 }
 
-export class SymbolVertex extends DataVertexBase {
+export class SymbolVertex extends DataVertex {
     get kind() { return VertexKind.Symbol; }
 
     private _startEdge?: Edge;
@@ -86,7 +82,7 @@ export class SymbolVertex extends DataVertexBase {
     }
 }
 
-export class ParameterVertex extends DataVertexBase {
+export class ParameterVertex extends DataVertex {
     get kind() { return VertexKind.Parameter; }
 
     constructor(readonly position: number, type: ts.Type) {
@@ -102,7 +98,7 @@ export class ParameterVertex extends DataVertexBase {
     }
 }
 
-export abstract class UnaryOperationVertex extends DataVertexBase {
+export abstract class UnaryOperationVertex extends DataVertex {
 
     private _operandEdge?: Edge;
 
@@ -159,7 +155,7 @@ export class PostfixUnaryOperationVertex extends UnaryOperationVertex {
     }
 }
 
-export class BinaryOperationVertex extends DataVertexBase {
+export class BinaryOperationVertex extends DataVertex {
     get kind() { return VertexKind.BinaryOperation; }
 
     private _leftEdge?: Edge;
@@ -223,7 +219,7 @@ export class BinaryOperationVertex extends DataVertexBase {
 
 export type PhiOperand = {value: DataVertex, srcBranch: ControlVertex};
 
-export class PhiVertex extends DataVertexBase {
+export class PhiVertex extends DataVertex {
     get kind() { return VertexKind.Phi; }
 
     private _operandEdges: Array<PhiEdge> = [];
