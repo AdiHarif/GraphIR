@@ -6,8 +6,10 @@ import * as irType from '../type/type.js';
 import { Vertex, VertexBase, VertexKind, VertexCategory } from './vertex.js';
 import { StartVertex, ControlVertex, MergeVertex } from './control_vertex.js';
 import { VertexVisitor } from './vertex_visitor.js';
-import { Value, Operator } from '../helper_types.js';
 import { Edge, PhiEdge, EdgeCategory } from '../edge.js';
+
+export type Value = number | string | boolean | null | undefined
+export type Operator = string
 
 export abstract class DataVertex extends VertexBase {
     get category() { return VertexCategory.Data; }
