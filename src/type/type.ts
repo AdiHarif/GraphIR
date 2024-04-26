@@ -5,6 +5,12 @@ export abstract class Type {
     abstract accept<T>(visitor: TypeVisitor<T>): T;
 }
 
+export class UnknownType extends Type {
+    accept<T>(visitor: TypeVisitor<T>): T {
+        return visitor.visitUnknownType(this);
+    }
+}
+
 export class OptionType extends Type {
     constructor(public baseType: Type) {
         super();
