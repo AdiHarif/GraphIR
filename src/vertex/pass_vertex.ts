@@ -6,6 +6,7 @@ import { NonTerminalControlVertex, NonInitialControlVertex } from './control_ver
 import { DataVertex, SymbolVertex } from './data_vertex.js';
 import { VertexVisitor } from './vertex_visitor.js';
 import { Edge, EdgeCategory } from '../edge.js';
+import { Type } from '../module_exports.js';
 
 export class PassVertex extends NonTerminalControlVertex implements NonInitialControlVertex {
     get kind() { return VertexKind.Pass; }
@@ -29,6 +30,8 @@ export class PassVertex extends NonTerminalControlVertex implements NonInitialCo
 
 export abstract class CompoundVertex extends PassVertex implements DataVertex {
     get category() { return VertexCategory.Compound; }
+
+    public verifiedType?: Type;
 
     readonly declaredType: ts.Type;
 
