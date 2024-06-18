@@ -6,7 +6,7 @@ import { VertexVisitor } from './vertex/vertex_visitor.js';
 
 import {
     LiteralVertex,
-    SymbolVertex,
+    StaticSymbolVertex,
     ParameterVertex,
     PrefixUnaryOperationVertex,
     PostfixUnaryOperationVertex,
@@ -44,7 +44,7 @@ class VertexVerifier implements VertexVisitor<boolean> {
         return true;
     }
 
-    visitSymbolVertex(v: SymbolVertex): boolean{
+    visitStaticSymbolVertex(v: StaticSymbolVertex): boolean{
         return v.name !== undefined && v.startVertex !== undefined;
     }
 

@@ -3,7 +3,7 @@ import ts from 'typescript';
 
 import { Vertex, VertexCategory, VertexKind } from './vertex.js';
 import { NonTerminalControlVertex, NonInitialControlVertex } from './control_vertex.js';
-import { DataVertex, SymbolVertex } from './data_vertex.js';
+import { DataVertex, StaticSymbolVertex } from './data_vertex.js';
 import { VertexVisitor } from './vertex_visitor.js';
 import { Edge, EdgeCategory } from '../edge.js';
 import { Type } from '../module_exports.js';

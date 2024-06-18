@@ -3,7 +3,7 @@ import * as csv_writer from 'csv-writer'
 import { Graph } from '../graph.js'
 
 import { VertexKind } from '../vertex/vertex.js'
-import { LiteralVertex, ParameterVertex, SymbolVertex } from '../module_exports.js';
+import { LiteralVertex, ParameterVertex, StaticSymbolVertex } from '../module_exports.js';
 
 export async function writeRecordsToFiles(graph: Graph, verticesWriter: any, edgesWriter: any) {
 
@@ -17,7 +17,7 @@ export async function writeRecordsToFiles(graph: Graph, verticesWriter: any, edg
                 value = String((v as LiteralVertex).value);
                 break;
             case VertexKind.Symbol:
-                value = (v as SymbolVertex).name;
+                value = (v as StaticSymbolVertex).name;
                 break;
             case VertexKind.Parameter:
                 value = String((v as ParameterVertex).position);

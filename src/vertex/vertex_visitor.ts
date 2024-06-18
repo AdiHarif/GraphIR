@@ -1,7 +1,7 @@
 
 import {
     LiteralVertex,
-    SymbolVertex,
+    StaticSymbolVertex,
     ParameterVertex,
     PrefixUnaryOperationVertex,
     PostfixUnaryOperationVertex,
@@ -30,7 +30,7 @@ import {
 
 export interface VertexVisitor<T> {
     visitLiteralVertex(vertex: LiteralVertex): T;
-    visitSymbolVertex(vertex: SymbolVertex): T;
+    visitStaticSymbolVertex(vertex: StaticSymbolVertex): T;
     visitParameterVertex(vertex: ParameterVertex): T;
     visitPrefixUnaryOperationVertex(vertex: PrefixUnaryOperationVertex): T;
     visitPostfixUnaryOperationVertex(vertex: PostfixUnaryOperationVertex): T;

@@ -41,7 +41,7 @@ export class LiteralVertex extends DataVertex {
     }
 }
 
-export class SymbolVertex extends DataVertex {
+export class StaticSymbolVertex extends DataVertex {
     get kind() { return VertexKind.Symbol; }
 
     private _startEdge?: Edge;
@@ -80,7 +80,7 @@ export class SymbolVertex extends DataVertex {
     }
 
     accept<T>(visitor: VertexVisitor<T>): T {
-        return visitor.visitSymbolVertex(this);
+        return visitor.visitStaticSymbolVertex(this);
     }
 }
 
