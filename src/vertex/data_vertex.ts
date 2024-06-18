@@ -45,10 +45,14 @@ export class StaticSymbolVertex extends DataVertex {
     get kind() { return VertexKind.Symbol; }
 
     private _startEdge?: Edge;
+    private _parameterEdges: Array<Edge> = [];
 
-    constructor(readonly name: string, type: ts.Type, startVertex?: StartVertex) {
+    constructor(readonly name: string, type: ts.Type, startVertex?: StartVertex, parameters?: Array<ParameterVertex>) {
         super(type);
         this.startVertex = startVertex;
+        if (parameters !== undefined) {
+            parameters.forEach((parameter) => this.addParameter(parameter));
+        }
     }
 
     public get startVertex(): StartVertex | undefined {
@@ -70,9 +74,18 @@ export class StaticSymbolVertex extends DataVertex {
         return `#${this.name}`;
     }
 
+    public addParameter(parameter: ParameterVertex) {
+        this._parameterEdges.push(new Edge(this, parameter, String(this._parameterEdges.length), EdgeCategory.Association));
+    }
+
+    public get parameters(): Array<ParameterVertex> {
+        return this._parameterEdges.map(edge => edge.target as ParameterVertex);
+    }
+
+
     public get outEdges(): Array<Edge> {
         if (this._startEdge) {
-            return [ this._startEdge ];
+            return [ this._startEdge, ...this._parameterEdges ];
         }
         else {
             return [];
