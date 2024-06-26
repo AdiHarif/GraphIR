@@ -1,5 +1,6 @@
 
 import {
+    VoidType,
     UnknownType,
     OptionType,
     NumberType,
@@ -14,6 +15,7 @@ import {
 } from './array_type.js'
 
 export interface TypeVisitor<T> {
+    visitVoidType(type: VoidType): T;
     visitUnknownType(type: UnknownType): T;
     visitOptionType(type: OptionType): T;
     visitNumberType(type: NumberType): T;
