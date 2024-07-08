@@ -29,6 +29,9 @@ export class LiteralVertex extends DataVertex {
     }
 
     public get label(): string {
+        if (typeof this.value === 'string') {
+            return `"${this.value}"`;
+        }
         return String(this.value);
     }
 

@@ -15,6 +15,9 @@ export async function writeRecordsToFiles(graph: Graph, verticesWriter: any, edg
         switch (v.kind) {
             case VertexKind.Literal:
                 value = String((v as LiteralVertex).value);
+                if (typeof (v as LiteralVertex).value === 'string') {
+                    value = `"${value}"`;
+                }
                 break;
             case VertexKind.Symbol:
                 value = (v as StaticSymbolVertex).name;
