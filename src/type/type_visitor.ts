@@ -6,7 +6,9 @@ import {
     NumberType,
     IntegerType,
     FloatType,
-    FunctionType
+    FunctionType,
+    StaticStringType,
+    DynamicStringType
 } from './type.js'
 
 import {
@@ -22,6 +24,8 @@ export interface TypeVisitor<T> {
     visitIntegerType(type: IntegerType): T;
     visitFloatType(type: FloatType): T;
     visitFunctionType(type: FunctionType): T;
+    visitStaticStringType(type: StaticStringType): T;
+    visitDynamicStringType(type: DynamicStringType): T;
     visitStaticArrayType(type: StaticArrayType): T;
     visitDynamicArrayType(type: DynamicArrayType): T;
 }

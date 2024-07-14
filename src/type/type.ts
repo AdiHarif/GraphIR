@@ -64,3 +64,19 @@ export class FunctionType extends Type {
         return visitor.visitFunctionType(this);
     }
 }
+
+export class StaticStringType extends Type {
+    constructor(public length: number) {
+        super();
+    }
+
+    accept<T>(visitor: TypeVisitor<T>): T {
+        return visitor.visitStaticStringType(this);
+    }
+}
+
+export class DynamicStringType extends Type {
+    accept<T>(visitor: TypeVisitor<T>): T {
+        return visitor.visitDynamicStringType(this);
+    }
+}
