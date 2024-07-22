@@ -80,3 +80,13 @@ export class DynamicStringType extends Type {
         return visitor.visitDynamicStringType(this);
     }
 }
+
+export class UnionType extends Type {
+    constructor(public types: Array<Type>) {
+        super();
+    }
+
+    accept<T>(visitor: TypeVisitor<T>): T {
+        return visitor.visitUnionType(this);
+    }
+}

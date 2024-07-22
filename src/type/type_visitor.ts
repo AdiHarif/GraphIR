@@ -8,7 +8,8 @@ import {
     FloatType,
     FunctionType,
     StaticStringType,
-    DynamicStringType
+    DynamicStringType,
+    UnionType
 } from './type.js'
 
 import {
@@ -26,6 +27,7 @@ export interface TypeVisitor<T> {
     visitFunctionType(type: FunctionType): T;
     visitStaticStringType(type: StaticStringType): T;
     visitDynamicStringType(type: DynamicStringType): T;
+    visitUnionType(type: UnionType): T;
     visitStaticArrayType(type: StaticArrayType): T;
     visitDynamicArrayType(type: DynamicArrayType): T;
 }
