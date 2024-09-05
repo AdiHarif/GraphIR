@@ -2,6 +2,7 @@
 import {
     VoidType,
     UnknownType,
+    UndefinedType,
     OptionType,
     NumberType,
     IntegerType,
@@ -20,6 +21,7 @@ import {
 export interface TypeVisitor<T> {
     visitVoidType(type: VoidType): T;
     visitUnknownType(type: UnknownType): T;
+    visitUndefinedType(type: UndefinedType): T;
     visitOptionType(type: OptionType): T;
     visitNumberType(type: NumberType): T;
     visitIntegerType(type: IntegerType): T;

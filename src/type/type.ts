@@ -17,6 +17,12 @@ export class UnknownType extends Type {
     }
 }
 
+export class UndefinedType extends Type {
+    accept<T>(visitor: TypeVisitor<T>): T {
+        return visitor.visitUndefinedType(this);
+    }
+}
+
 export class OptionType extends Type {
     constructor(public baseType: Type) {
         super();
