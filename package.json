@@ -13,9 +13,11 @@
   "license": "ISC",
   "types": "dist/dts/module_exports.d.ts",
   "dependencies": {
-    "@types/node": "^18.16.2",
     "csv-writer": "^1.6.0",
     "ts-graphviz": "^1.8.1",
     "typescript": "^4.8.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22.6.1"
   }
 }
