@@ -12,6 +12,8 @@ export class Graph {
     public declaredType?: ts.Type;
     public verifiedType?: irType.Type;
 
+    public jsDocTags: { [key: string]: string } = {};
+
     constructor(vertices?: Array<Vertex>, startVertex?: StartVertex, subgraphs?: Array<Graph>) {
         if (vertices !== undefined) {
             this.vertices = vertices;
