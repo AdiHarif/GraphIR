@@ -9,6 +9,8 @@ export class Graph {
     private startVertex?: StartVertex;
     public readonly subgraphs: Array<Graph> = [];
 
+    public name?: string;
+
     public declaredType?: ts.Type;
     public verifiedType?: irType.Type;
 
