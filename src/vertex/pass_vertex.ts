@@ -270,6 +270,16 @@ export class CallVertex extends CompoundVertex {
         arg.pushInEdge(e);
     }
 
+    public setArg(index: number, arg: DataVertex) {
+        if (index < 0 || index >= this._argsEdges.length) {
+            throw new Error('Index out of bounds');
+        }
+        const old = this._argsEdges[index];
+        old.target.removeInEdge(old);
+        this._argsEdges[index] = new Edge(this, arg, String(index), EdgeCategory.Data);
+        arg.pushInEdge(this._argsEdges[index]);
+    }
+
     public get callerObject(): DataVertex | undefined {
         return this._callerObjectEdge?.target as DataVertex | undefined;
     }
