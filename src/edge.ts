@@ -13,7 +13,7 @@ export class Edge {
 
     constructor(
         readonly source: Vertex,
-        readonly target: Vertex,
+        public target: Vertex,
         private _label: string,
         readonly category: EdgeCategory) {
     }
