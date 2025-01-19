@@ -21,6 +21,10 @@ export class Edge {
     public get label(): string {
         return this._label;
     }
+
+    public set label(v: string) {
+        this._label = v;
+    }
 }
 
 export class PhiEdge extends Edge {
