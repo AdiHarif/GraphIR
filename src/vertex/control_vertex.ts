@@ -177,6 +177,55 @@ export class ReturnVertex extends ControlVertex implements NonInitialControlVert
     }
 }
 
+export class ThrowVertex extends ControlVertex implements NonInitialControlVertex {
+    get kind() { return VertexKind.Throw; }
+
+    private _valueEdge?: Edge;
+
+    constructor(value?: DataVertex) {
+        super();
+        this.value = value;
+    }
+
+    public get value(): DataVertex | undefined {
+        return this._valueEdge?.target as DataVertex | undefined;
+    }
+
+    public set value(v: DataVertex | undefined) {
+        if (this._valueEdge) {
+            this._valueEdge.target.removeInEdge(this._valueEdge);
+            this._valueEdge = undefined;
+        }
+        if (v) {
+            this._valueEdge = new Edge(this, v, 'value', EdgeCategory.Data);
+            v.pushInEdge(this._valueEdge);
+        }
+    }
+
+    private _previous?: NonTerminalControlVertex;
+
+    public get previous(): NonTerminalControlVertex | undefined {
+        return this._previous;
+    }
+
+    /*@internal*/
+    public set previous(vertex: NonTerminalControlVertex | undefined) {
+        this._previous = vertex;
+    }
+
+    public get outEdges(): Array<Edge> {
+        const out = super.outEdges;
+        if (this._valueEdge) {
+            out.push(this._valueEdge);
+        }
+        return out;
+    }
+
+    accept<T>(visitor: VertexVisitor<T>): T {
+        return visitor.visitThrowVertex(this);
+    }
+}
+
 
 export class BranchVertex extends ControlVertex implements NonInitialControlVertex {
     get kind() { return VertexKind.Branch; }

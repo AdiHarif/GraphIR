@@ -16,7 +16,8 @@ import {
     BranchVertex,
     MergeVertex,
     StartVertex,
-    ReturnVertex
+    ReturnVertex,
+    ThrowVertex
 } from './control_vertex.js';
 
 import {
@@ -40,6 +41,7 @@ export interface VertexVisitor<T> {
     visitBlockEndVertex(vertex: BlockEndVertex): T;
     visitStartVertex(vertex: StartVertex): T;
     visitReturnVertex(vertex: ReturnVertex): T;
+    visitThrowVertex(vertex: ThrowVertex): T;
     visitBranchVertex(vertex: BranchVertex): T;
     visitMergeVertex(vertex: MergeVertex): T;
     visitPassVertex(vertex: PassVertex): T;

@@ -21,7 +21,8 @@ import {
     BranchVertex,
     MergeVertex,
     StartVertex,
-    ReturnVertex
+    ReturnVertex,
+    ThrowVertex
 } from './vertex/control_vertex.js';
 
 import {
@@ -86,6 +87,10 @@ class VertexVerifier implements VertexVisitor<boolean> {
 
     visitReturnVertex(v: ReturnVertex): boolean {
         return true;
+    }
+
+    visitThrowVertex(v: ThrowVertex): boolean {
+        return v.value !== undefined;
     }
 
     visitBranchVertex(v: BranchVertex): boolean {

@@ -15,6 +15,7 @@ export enum VertexKind {
     BlockEnd = 'BlockEnd',
     Start = 'Start',
     Return = 'Return',
+    Throw = 'Throw',
     Branch = 'Branch',
     Merge = 'Merge',
     Pass = 'Pass',
