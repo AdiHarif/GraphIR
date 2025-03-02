@@ -10,7 +10,8 @@ import {
     FunctionType,
     StaticStringType,
     DynamicStringType,
-    UnionType
+    UnionType,
+    UserDefinedType
 } from './type.js'
 
 import {
@@ -30,6 +31,7 @@ export interface TypeVisitor<T> {
     visitStaticStringType(type: StaticStringType): T;
     visitDynamicStringType(type: DynamicStringType): T;
     visitUnionType(type: UnionType): T;
+    visitUserDefinedType(type: UserDefinedType): T;
     visitStaticArrayType(type: StaticArrayType): T;
     visitDynamicArrayType(type: DynamicArrayType): T;
 }

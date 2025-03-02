@@ -96,3 +96,13 @@ export class UnionType extends Type {
         return visitor.visitUnionType(this);
     }
 }
+
+export class UserDefinedType extends Type {
+    constructor(public name: string) {
+        super();
+    }
+
+    accept<T>(visitor: TypeVisitor<T>): T {
+        return visitor.visitUserDefinedType(this);
+    }
+}
