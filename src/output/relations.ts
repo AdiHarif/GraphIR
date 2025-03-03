@@ -30,7 +30,7 @@ export async function writeRecordsToFiles(graph: Graph, verticesWriter: any, edg
                 break;
         }
         vertices.push([ v.id, v.kind, v.category, value ]);
-        edges.push(...v.outEdges.map(e=> [ e.source.id, e.target!.id, e.category, e.label ]));
+        v.outEdges.map(e=> [ e.source.id, e.target!.id, e.category, e.label ]).forEach(e => edges.push(e));
     })
 
     await Promise.all([
