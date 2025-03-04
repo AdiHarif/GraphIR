@@ -49,6 +49,7 @@ export class StaticSymbolVertex extends DataVertex {
 
     private _startEdge?: Edge;
     private _parameterEdges: Array<Edge> = [];
+    private _thisEdge?: Edge;
 
     constructor(readonly name: string, type: ts.Type, startVertex?: StartVertex, parameters?: Array<ParameterVertex>) {
         super(type);
@@ -85,14 +86,30 @@ export class StaticSymbolVertex extends DataVertex {
         return this._parameterEdges.map(edge => edge.target as ParameterVertex);
     }
 
+    public get this(): DataVertex | undefined {
+        return this._thisEdge?.target as DataVertex | undefined;
+    }
+
+    public set this(v: DataVertex | undefined) {
+        if (this._thisEdge) {
+            (this._thisEdge.target as VertexBase).removeInEdge(this._thisEdge);
+            this._thisEdge = undefined;
+        }
+        if (v) {
+            this._thisEdge = new Edge(this, v, 'this', EdgeCategory.Association);
+            v.pushInEdge(this._thisEdge);
+        }
+    }
 
     public get outEdges(): Array<Edge> {
+        let out: Array<Edge> = [];
         if (this._startEdge) {
-            return [ this._startEdge, ...this._parameterEdges ];
+            out = [ this._startEdge, ...this._parameterEdges ];
+            if (this._thisEdge) {
+                out.push(this._thisEdge);
+            }
         }
-        else {
-            return [];
-        }
+        return out;
     }
 
     accept<T>(visitor: VertexVisitor<T>): T {
