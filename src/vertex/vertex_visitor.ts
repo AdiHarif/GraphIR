@@ -3,8 +3,7 @@ import {
     LiteralVertex,
     StaticSymbolVertex,
     ParameterVertex,
-    PrefixUnaryOperationVertex,
-    PostfixUnaryOperationVertex,
+    UnaryOperationVertex,
     BinaryOperationVertex,
     PhiVertex
 } from './data_vertex.js';
@@ -33,8 +32,7 @@ export interface VertexVisitor<T> {
     visitLiteralVertex(vertex: LiteralVertex): T;
     visitStaticSymbolVertex(vertex: StaticSymbolVertex): T;
     visitParameterVertex(vertex: ParameterVertex): T;
-    visitPrefixUnaryOperationVertex(vertex: PrefixUnaryOperationVertex): T;
-    visitPostfixUnaryOperationVertex(vertex: PostfixUnaryOperationVertex): T;
+    visitUnaryOperationVertex(vertex: UnaryOperationVertex): T;
     visitBinaryOperationVertex(vertex: BinaryOperationVertex): T;
     visitPhiVertex(vertex: PhiVertex): T;
     visitBlockBeginVertex(vertex: BlockBeginVertex): T;

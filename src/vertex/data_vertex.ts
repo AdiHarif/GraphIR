@@ -133,13 +133,18 @@ export class ParameterVertex extends DataVertex {
     }
 }
 
-export abstract class UnaryOperationVertex extends DataVertex {
+export class UnaryOperationVertex extends DataVertex {
+    get kind() { return VertexKind.UnaryOperation; }
 
     private _operandEdge?: Edge;
 
     constructor(readonly operator: Operator, type: ts.Type, operand?: DataVertex) {
         super(type);
         this.operand = operand;
+    }
+
+    public get label(): string {
+        return `${this.operator}`;
     }
 
     public get operand(): DataVertex | undefined {
@@ -164,29 +169,9 @@ export abstract class UnaryOperationVertex extends DataVertex {
         }
         return out;
     }
-}
-
-export class PrefixUnaryOperationVertex extends UnaryOperationVertex {
-    get kind() { return VertexKind.PrefixUnaryOperation; }
-
-    public get label(): string {
-        return `${this.operator} (Prefix)`;
-    }
 
     accept<T>(visitor: VertexVisitor<T>): T {
-        return visitor.visitPrefixUnaryOperationVertex(this);
-    }
-}
-
-export class PostfixUnaryOperationVertex extends UnaryOperationVertex {
-    get kind() { return VertexKind.PostfixUnaryOperation; }
-
-    public get label(): string {
-        return `${this.operator} (Postfix)`;
-    }
-
-    accept<T>(visitor: VertexVisitor<T>): T {
-        return visitor.visitPostfixUnaryOperationVertex(this);
+        return visitor.visitUnaryOperationVertex(this);
     }
 }
 

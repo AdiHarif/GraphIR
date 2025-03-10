@@ -8,8 +8,7 @@ import {
     LiteralVertex,
     StaticSymbolVertex,
     ParameterVertex,
-    PrefixUnaryOperationVertex,
-    PostfixUnaryOperationVertex,
+    UnaryOperationVertex,
     BinaryOperationVertex,
     PhiVertex
 } from './vertex/data_vertex.js';
@@ -53,11 +52,7 @@ class VertexVerifier implements VertexVisitor<boolean> {
         return v.position !== undefined;
     }
 
-    visitPrefixUnaryOperationVertex(v: PrefixUnaryOperationVertex): boolean {
-        return v.operator !== undefined && v.operand !== undefined;
-    }
-
-    visitPostfixUnaryOperationVertex(v: PostfixUnaryOperationVertex): boolean {
+    visitUnaryOperationVertex(v: UnaryOperationVertex): boolean {
         return v.operator !== undefined && v.operand !== undefined;
     }
 
