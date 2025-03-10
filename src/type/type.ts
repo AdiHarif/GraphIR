@@ -23,6 +23,12 @@ export class UndefinedType extends Type {
     }
 }
 
+export class NullType extends Type {
+    accept<T>(visitor: TypeVisitor<T>): T {
+        return visitor.visitNullType(this);
+    }
+}
+
 export class OptionType extends Type {
     constructor(public baseType: Type) {
         super();
@@ -104,5 +110,15 @@ export class UserDefinedType extends Type {
 
     accept<T>(visitor: TypeVisitor<T>): T {
         return visitor.visitUserDefinedType(this);
+    }
+}
+
+export class ObjectType extends Type {
+    constructor(public elementType: Type) {
+        super();
+    }
+
+    accept<T>(visitor: TypeVisitor<T>): T {
+        return visitor.visitObjectType(this);
     }
 }
