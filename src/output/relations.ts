@@ -46,8 +46,8 @@ export async function writeRecordsToFiles(graph: Graph, verticesWriter: any, edg
 
 export async function exportIrToRelations(graph: Graph, dir: string) {
     const verticesPath = `${dir}/vertices.csv`
-    const verticesWriter = csv_writer.createArrayCsvWriter({path: verticesPath})
+    const verticesWriter = csv_writer.createArrayCsvWriter({path: verticesPath, fieldDelimiter: ';'})
     const edgesPath = `${dir}/edges.csv`
-    const edgesWriter = csv_writer.createArrayCsvWriter({path: edgesPath})
+    const edgesWriter = csv_writer.createArrayCsvWriter({path: edgesPath, fieldDelimiter: ';'})
     await writeRecordsToFiles(graph, verticesWriter, edgesWriter);
 }
