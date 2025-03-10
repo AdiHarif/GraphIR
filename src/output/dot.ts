@@ -52,9 +52,9 @@ function irToModel(graph: Graph): gviz.Subgraph {
     return digraph
 }
 
-export function exportIrToDot(graph: Graph, outDir: string) {
+export async function exportIrToDot(graph: Graph, outDir: string) {
     const dotGraph = new gviz.Digraph()
     dotGraph.addSubgraph(irToModel(graph));
     const outString: string =  gviz.toDot(dotGraph);
-    fs.writeFile(`${outDir}/graph.dot`, outString);
+    await fs.writeFile(`${outDir}/graph.dot`, outString);
 }
